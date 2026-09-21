@@ -1,45 +1,41 @@
-/* ─── Reset & base ────────────────────────────────────────────────────────── */
+/* ─── Reset & base ───────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --color-bg:        #0f0f13;
-  --color-surface:   #1a1a24;
-  --color-border:    #2e2e42;
-  --color-x:         #e05c5c;
-  --color-o:         #5c9ee0;
-  --color-winning:   #f0c040;
-  --color-text:      #e8e8f0;
-  --color-muted:     #7a7a9a;
-  --color-accent:    #7c6ef5;
-  --radius:          12px;
-  --transition:      0.18s ease;
+  --bg:        #0f0f13;
+  --surface:   #1a1a24;
+  --border:    #2e2e42;
+  --x:         #e05c5c;
+  --o:         #5c9ee0;
+  --winning:   #f0c040;
+  --text:      #e8e8f0;
+  --muted:     #7a7a9a;
+  --accent:    #7c6ef5;
+  --radius:    12px;
+  --t:         0.18s ease;
 }
 
 html, body, #root {
   height: 100%;
   font-family: 'Inter', system-ui, sans-serif;
-  background: var(--color-bg);
-  color: var(--color-text);
+  background: var(--bg);
+  color: var(--text);
 }
 
-/* ─── App shell ───────────────────────────────────────────────────────────── */
-.app {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
+/* ─── App shell ──────────────────────────────────────────────── */
+.app { min-height: 100vh; display: flex; flex-direction: column; }
 
 .app__header {
   padding: 1.25rem 2rem;
-  border-bottom: 1px solid var(--color-border);
-  background: var(--color-surface);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
 }
 
 .app__title {
   font-size: 1.5rem;
   font-weight: 700;
   letter-spacing: 0.04em;
-  color: var(--color-accent);
+  color: var(--accent);
 }
 
 .app__main {
@@ -51,13 +47,8 @@ html, body, #root {
   align-items: flex-start;
 }
 
-/* ─── Aside — move history ────────────────────────────────────────────────── */
-.app__aside {
-  width: 220px;
-  flex-shrink: 0;
-}
+.app__aside { width: 220px; flex-shrink: 0; }
 
-/* ─── Game section ────────────────────────────────────────────────────────── */
 .app__game {
   display: flex;
   flex-direction: column;
@@ -65,12 +56,12 @@ html, body, #root {
   gap: 1.25rem;
 }
 
-/* ─── Scoreboard ──────────────────────────────────────────────────────────── */
+/* ─── Scoreboard ─────────────────────────────────────────────── */
 .scoreboard {
   display: flex;
   gap: 1rem;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 0.75rem 1.25rem;
 }
@@ -84,14 +75,14 @@ html, body, #root {
   border-radius: 8px;
 }
 
-.score-item--x   { color: var(--color-x); background: rgba(224,92,92,0.1); }
-.score-item--o   { color: var(--color-o); background: rgba(92,158,224,0.1); }
-.score-item--draw{ color: var(--color-muted); background: rgba(122,122,154,0.1); }
+.score-item--x    { color: var(--x);    background: rgba(224,92,92,0.1); }
+.score-item--o    { color: var(--o);    background: rgba(92,158,224,0.1); }
+.score-item--draw { color: var(--muted); background: rgba(122,122,154,0.1); }
 
-.score-label { color: var(--color-muted); font-size: 0.78rem; margin-right: 0.25rem; }
+.score-label { color: var(--muted); font-size: 0.78rem; margin-right: 0.25rem; }
 .score-value { font-weight: 700; font-size: 1.1rem; }
 
-/* ─── Status bar ──────────────────────────────────────────────────────────── */
+/* ─── Status bar ─────────────────────────────────────────────── */
 .status {
   display: flex;
   align-items: center;
@@ -100,74 +91,68 @@ html, body, #root {
   font-weight: 600;
   padding: 0.6rem 1.25rem;
   border-radius: var(--radius);
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
+  border: 1px solid var(--border);
+  background: var(--surface);
   min-width: 220px;
   justify-content: center;
-  transition: background var(--transition);
 }
 
-.status--winner { border-color: var(--color-winning); color: var(--color-winning); background: rgba(240,192,64,0.08); }
-.status--draw   { border-color: var(--color-muted);   color: var(--color-muted); }
-.status--next   { border-color: var(--color-border);  color: var(--color-text); }
+.status--winner { border-color: var(--winning); color: var(--winning); background: rgba(240,192,64,0.08); }
+.status--draw   { border-color: var(--muted);   color: var(--muted); }
 
-/* ─── Board ───────────────────────────────────────────────────────────────── */
+/* ─── Board ──────────────────────────────────────────────────── */
 .board {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
   padding: 10px;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: var(--radius);
 }
 
-/* ─── Square ──────────────────────────────────────────────────────────────── */
+/* ─── Square ─────────────────────────────────────────────────── */
 .square {
   width: 96px;
   height: 96px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid var(--color-border);
+  border: 2px solid var(--border);
   border-radius: 10px;
-  background: var(--color-bg);
+  background: var(--bg);
   cursor: pointer;
-  transition: border-color var(--transition), background var(--transition), transform var(--transition), box-shadow var(--transition);
-  color: var(--color-text);
+  transition: border-color var(--t), background var(--t), transform var(--t), box-shadow var(--t);
+  color: var(--text);
   outline: none;
 }
 
-/* Hover only on empty, enabled cells */
 .square:not(.square--disabled):not(.square--x):not(.square--o):hover {
-  border-color: var(--color-accent);
+  border-color: var(--accent);
   background: rgba(124,110,245,0.08);
   transform: scale(1.04);
   box-shadow: 0 0 0 3px rgba(124,110,245,0.2);
 }
 
-.square--x { color: var(--color-x); border-color: rgba(224,92,92,0.35); }
-.square--o { color: var(--color-o); border-color: rgba(92,158,224,0.35); }
+.square--x { color: var(--x); border-color: rgba(224,92,92,0.35); }
+.square--o { color: var(--o); border-color: rgba(92,158,224,0.35); }
 
 .square--winning {
-  border-color: var(--color-winning) !important;
+  border-color: var(--winning) !important;
   background: rgba(240,192,64,0.1) !important;
-  animation: pulse-win 0.6s ease forwards;
+  animation: pulse 0.6s ease forwards;
 }
 
-@keyframes pulse-win {
-  0%   { transform: scale(1); }
-  40%  { transform: scale(1.1); }
-  100% { transform: scale(1); }
+@keyframes pulse {
+  0%  { transform: scale(1); }
+  40% { transform: scale(1.1); }
+  100%{ transform: scale(1); }
 }
 
 .square--disabled { cursor: default; }
 
-/* ─── Controls ────────────────────────────────────────────────────────────── */
-.controls {
-  display: flex;
-  gap: 0.75rem;
-}
+/* ─── Controls ───────────────────────────────────────────────── */
+.controls { display: flex; gap: 0.75rem; }
 
 .btn {
   display: flex;
@@ -178,34 +163,30 @@ html, body, #root {
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
-  border: 1px solid var(--color-border);
-  transition: background var(--transition), border-color var(--transition), opacity var(--transition);
+  border: 1px solid var(--border);
+  transition: background var(--t), opacity var(--t);
 }
 
 .btn--reset {
   background: rgba(124,110,245,0.12);
-  color: var(--color-accent);
-  border-color: var(--color-accent);
+  color: var(--accent);
+  border-color: var(--accent);
 }
 .btn--reset:hover { background: rgba(124,110,245,0.25); }
 
-.btn--undo {
-  background: var(--color-surface);
-  color: var(--color-text);
-}
+.btn--undo { background: var(--surface); color: var(--text); }
 .btn--undo:hover:not(:disabled) { background: rgba(255,255,255,0.06); }
 .btn--undo:disabled { opacity: 0.35; cursor: default; }
 
-/* ─── Move history ────────────────────────────────────────────────────────── */
+/* ─── Move history ───────────────────────────────────────────── */
 .history {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 1rem;
   max-height: 480px;
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: var(--color-border) transparent;
 }
 
 .history__title {
@@ -214,18 +195,13 @@ html, body, #root {
   gap: 0.4rem;
   font-size: 0.85rem;
   font-weight: 700;
-  color: var(--color-muted);
+  color: var(--muted);
   text-transform: uppercase;
   letter-spacing: 0.06em;
   margin-bottom: 0.75rem;
 }
 
-.history__list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-}
+.history__list { list-style: none; display: flex; flex-direction: column; gap: 0.3rem; }
 
 .history__btn {
   width: 100%;
@@ -236,23 +212,19 @@ html, body, #root {
   border-radius: 7px;
   border: 1px solid transparent;
   background: transparent;
-  color: var(--color-muted);
+  color: var(--muted);
   font-size: 0.82rem;
   cursor: pointer;
   text-align: left;
-  transition: background var(--transition), color var(--transition), border-color var(--transition);
+  transition: background var(--t), color var(--t), border-color var(--t);
 }
 
-.history__btn:hover {
-  background: rgba(124,110,245,0.1);
-  color: var(--color-text);
-  border-color: var(--color-border);
-}
+.history__btn:hover { background: rgba(124,110,245,0.1); color: var(--text); border-color: var(--border); }
 
 .history__btn--active {
   background: rgba(124,110,245,0.15);
-  color: var(--color-accent);
-  border-color: var(--color-accent);
+  color: var(--accent);
+  border-color: var(--accent);
   font-weight: 600;
 }
 
@@ -263,35 +235,19 @@ html, body, #root {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: var(--color-border);
+  background: var(--border);
   font-size: 0.72rem;
   font-weight: 700;
   flex-shrink: 0;
 }
 
-/* ─── Responsive ──────────────────────────────────────────────────────────── */
+/* ─── Responsive ─────────────────────────────────────────────── */
 @media (max-width: 720px) {
-  .app__main {
-    flex-direction: column;
-    align-items: center;
-    padding: 1rem;
-    gap: 1.25rem;
-  }
-
-  .app__aside {
-    width: 100%;
-    max-width: 360px;
-    order: 2; /* history below board on mobile */
-  }
-
-  .app__game { order: 1; width: 100%; }
-
-  .square {
-    width: clamp(72px, 26vw, 96px);
-    height: clamp(72px, 26vw, 96px);
-  }
-
-  .history { max-height: 220px; }
+  .app__main { flex-direction: column; align-items: center; padding: 1rem; gap: 1.25rem; }
+  .app__aside { width: 100%; max-width: 360px; order: 2; }
+  .app__game  { order: 1; width: 100%; }
+  .square     { width: clamp(72px, 26vw, 96px); height: clamp(72px, 26vw, 96px); }
+  .history    { max-height: 220px; }
 }
 
 @media (max-width: 400px) {

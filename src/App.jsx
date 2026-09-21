@@ -1,6 +1,3 @@
-// ─── App ─────────────────────────────────────────────────────────────────────
-// Root component. Composes all pieces using the useGame hook.
-
 import { useGame } from './hooks/useGame';
 import Board from './components/Board';
 import StatusBar from './components/StatusBar';
@@ -34,12 +31,10 @@ export default function App() {
       </header>
 
       <main className="app__main">
-        {/* Left panel — history (hidden on small screens, shown via toggle) */}
         <aside className="app__aside">
           <MoveHistory history={history} currentStep={step} onTravelTo={travelTo} />
         </aside>
 
-        {/* Centre — the game */}
         <section className="app__game">
           <Scoreboard scores={scores} />
           <StatusBar winner={winner} isDraw={isDraw} currentPlayer={currentPlayer} />
