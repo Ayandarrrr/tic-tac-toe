@@ -3,12 +3,12 @@
 
 import { Trophy, Handshake, X, Circle } from 'lucide-react';
 
-export default function StatusBar({ winner, isDraw, currentPlayer }) {
+export default function StatusBar({ winner, winnerName, isDraw, currentPlayer, currentPlayerName }) {
   if (winner) {
     return (
       <div className="status status--winner">
         <Trophy size={20} />
-        <span>Winner: {winner}</span>
+        <span>Winner: {winnerName || winner}</span>
       </div>
     );
   }
@@ -25,7 +25,7 @@ export default function StatusBar({ winner, isDraw, currentPlayer }) {
   return (
     <div className="status status--next">
       {currentPlayer === 'X' ? <X size={18} strokeWidth={3} /> : <Circle size={18} strokeWidth={3} />}
-      <span>Next Player: {currentPlayer}</span>
+      <span>Next Player: {currentPlayerName || currentPlayer}</span>
     </div>
   );
 }
