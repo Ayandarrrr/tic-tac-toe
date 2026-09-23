@@ -41,6 +41,7 @@ export const initialState = {
   step: 0,
   // which player moves next at each step
   players: ['X'], // players[step] = who moved at that step; length grows with moves
+  startingPlayer: 'X',
   currentPlayer: 'X',
   winner: null,
   winningLine: [],
@@ -94,7 +95,9 @@ export function gameReducer(state, action) {
       return {
         ...state,
         step: prevStep,
-        currentPlayer: prevStep % 2 === 0 ? 'X' : 'O',
+        currentPlayer: prevStep % 2 === 0
+          ? state.startingPlayer
+          : state.startingPlayer === 'X' ? 'O' : 'X',
         winner: result ? result.winner : null,
         winningLine: result ? result.line : [],
         isDraw: draw,
@@ -110,7 +113,9 @@ export function gameReducer(state, action) {
       return {
         ...state,
         step,
-        currentPlayer: step % 2 === 0 ? 'X' : 'O',
+        currentPlayer: step % 2 === 0
+          ? state.startingPlayer
+          : state.startingPlayer === 'X' ? 'O' : 'X',
         winner: result ? result.winner : null,
         winningLine: result ? result.line : [],
         isDraw: draw,
@@ -118,8 +123,12 @@ export function gameReducer(state, action) {
     }
 
     case ACTIONS.RESET: {
+      const startingPlayer = state.startingPlayer === 'X' ? 'O' : 'X';
+
       return {
         ...initialState,
+        startingPlayer,
+        currentPlayer: startingPlayer,
         scores: state.scores, // preserve scores across rounds
       };
     }
