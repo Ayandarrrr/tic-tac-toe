@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useGame } from './hooks/useGame';
+import { chooseComputerMove } from './reducer/gameReducer';
 import Board from './components/Board';
 import StatusBar from './components/StatusBar';
 import Scoreboard from './components/Scoreboard';
@@ -15,6 +16,7 @@ export default function App() {
   const {
     board,
     currentPlayer,
+    computerEnabled,
     winner,
     winningLine,
     isDraw,
@@ -22,6 +24,8 @@ export default function App() {
     history,
     step,
     makeMove,
+    makeComputerMove,
+    setComputerMode,
     reset,
     undo,
     travelTo,
@@ -30,6 +34,15 @@ export default function App() {
   const [leaderboard, setLeaderboard] = useState(savedLeaderboard);
 
   const gameOver = !!winner || isDraw;
+
+  useEffect(() => {
+    if (!computerEnabled || currentPlayer !== 'O' || gameOver) return;
+    const timer = window.setTimeout(() => {
+      const move = chooseComputerMove(board);
+      if (move !== null) makeComputerMove(move);
+    }, 350);
+    return () => window.clearTimeout(timer);
+  }, [board, computerEnabled, currentPlayer, gameOver]);
 
   useEffect(() => {
     if (!winner) return;
@@ -63,7 +76,7 @@ export default function App() {
 
       <main className="app__main">
         <aside className="app__aside">
-          <PlayerSetup names={names} onChange={updateName} />
+          <PlayerSetup names={names} onChange={updateName} computerEnabled={computerEnabled} onToggleComputer={() => setComputerMode(!computerEnabled)} />
           <MoveHistory history={history} currentStep={step} onTravelTo={travelTo} />
           <Leaderboard entries={leaderboardEntries} />
         </aside>

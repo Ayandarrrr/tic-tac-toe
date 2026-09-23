@@ -6,6 +6,7 @@ export const ACTIONS = {
   RESET: 'RESET',
   UNDO: 'UNDO',
   TIME_TRAVEL: 'TIME_TRAVEL',
+  SET_COMPUTER_MODE: 'SET_COMPUTER_MODE',
 };
 
 const WINNING_LINES = [
@@ -32,6 +33,41 @@ export function calculateDraw(board) {
   return board.every((cell) => cell !== null) && !calculateWinner(board);
 }
 
+function minimax(board, maximizing) {
+  const result = calculateWinner(board);
+  if (result?.winner === 'O') return 10;
+  if (result?.winner === 'X') return -10;
+  if (calculateDraw(board)) return 0;
+
+  const scores = board.reduce((best, cell, index) => {
+    if (cell) return best;
+    const next = board.slice();
+    next[index] = maximizing ? 'O' : 'X';
+    const score = minimax(next, !maximizing);
+    return maximizing ? Math.max(best, score) : Math.min(best, score);
+  }, maximizing ? -Infinity : Infinity);
+
+  return scores + (maximizing ? 0 : 0);
+}
+
+export function chooseComputerMove(board) {
+  let bestScore = -Infinity;
+  let bestMove = null;
+
+  board.forEach((cell, index) => {
+    if (cell) return;
+    const next = board.slice();
+    next[index] = 'O';
+    const score = minimax(next, false);
+    if (score > bestScore) {
+      bestScore = score;
+      bestMove = index;
+    }
+  });
+
+  return bestMove;
+}
+
 const emptyBoard = Array(9).fill(null);
 
 export const initialState = {
@@ -46,6 +82,7 @@ export const initialState = {
   winner: null,
   winningLine: [],
   isDraw: false,
+  computerEnabled: false,
   scores: { X: 0, O: 0, draws: 0 },
 };
 
@@ -56,7 +93,7 @@ export function gameReducer(state, action) {
       const current = state.history[state.step];
 
       // Ignore if cell taken or game over
-      if (current[index] || state.winner || state.isDraw) return state;
+      if (current[index] || state.winner || state.isDraw || (state.computerEnabled && state.currentPlayer === 'O' && !action.payload.computer)) return state;
 
       const newBoard = current.slice();
       newBoard[index] = state.currentPlayer;
@@ -127,11 +164,18 @@ export function gameReducer(state, action) {
 
       return {
         ...initialState,
+        computerEnabled: state.computerEnabled,
         startingPlayer,
         currentPlayer: startingPlayer,
         scores: state.scores, // preserve scores across rounds
       };
     }
+
+    case ACTIONS.SET_COMPUTER_MODE:
+      return {
+        ...state,
+        computerEnabled: action.payload.enabled,
+      };
 
     default:
       return state;

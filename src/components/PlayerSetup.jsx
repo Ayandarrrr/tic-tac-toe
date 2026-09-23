@@ -1,6 +1,6 @@
 import { UserRound } from 'lucide-react';
 
-export default function PlayerSetup({ names, onChange }) {
+export default function PlayerSetup({ names, onChange, computerEnabled, onToggleComputer }) {
   return (
     <section className="player-setup" aria-labelledby="player-setup-title">
       <h2 id="player-setup-title"><UserRound size={17} /> Players</h2>
@@ -20,7 +20,12 @@ export default function PlayerSetup({ names, onChange }) {
           onChange={(event) => onChange('O', event.target.value)}
           placeholder="Player O"
           maxLength={20}
+          disabled={computerEnabled}
         />
+      </label>
+      <label className="computer-toggle">
+        <input type="checkbox" checked={computerEnabled} onChange={onToggleComputer} />
+        <span>Play against computer</span>
       </label>
     </section>
   );

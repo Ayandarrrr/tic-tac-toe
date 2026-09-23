@@ -158,6 +158,18 @@ html, body, #root {
 }
 
 .player-setup input:focus { outline: 2px solid rgba(217, 86, 145, 0.35); }
+.player-setup input:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.computer-toggle {
+  color: var(--text);
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.computer-toggle input {
+  width: auto;
+  accent-color: var(--accent);
+}
 
 .player-mark { font-weight: 700; width: 1rem; text-align: center; }
 .player-mark--x { color: var(--x); }

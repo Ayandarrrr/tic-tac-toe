@@ -13,6 +13,14 @@ export function useGame() {
     dispatch({ type: ACTIONS.MAKE_MOVE, payload: { index } });
   }
 
+  function makeComputerMove(index) {
+    dispatch({ type: ACTIONS.MAKE_MOVE, payload: { index, computer: true } });
+  }
+
+  function setComputerMode(enabled) {
+    dispatch({ type: ACTIONS.SET_COMPUTER_MODE, payload: { enabled } });
+  }
+
   function reset() {
     dispatch({ type: ACTIONS.RESET });
   }
@@ -28,6 +36,7 @@ export function useGame() {
   return {
     board,
     currentPlayer: state.currentPlayer,
+    computerEnabled: state.computerEnabled,
     winner: state.winner,
     winningLine: state.winningLine,
     isDraw: state.isDraw,
@@ -35,6 +44,8 @@ export function useGame() {
     history: state.history,
     step: state.step,
     makeMove,
+    makeComputerMove,
+    setComputerMode,
     reset,
     undo,
     travelTo,
